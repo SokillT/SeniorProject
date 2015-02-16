@@ -29,7 +29,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/news">Home</a></li>
             <li><a href="#about">คลังข่าว</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -37,21 +37,18 @@
     </nav>
 
 
-
-  <br>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2">
-        <br>
-        <li>ทุน</li>
-        <li>ข่าวประกาศ</li>
-        <li>กิจกรรม</li>
-        <br><br><br><br><br>
-      </div>
-      <div class="col-md-4">UTDATE</div>
+    
+    {% if activity_news %}
+  
+      {%for list in activity_news %}
+      
+          <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
+      {% endfor %}
+    {%else%}
+    Error!!!
+    {%endif%}
         
 
-    </div>
-  </div>  
+    
   </body>
 </html>
