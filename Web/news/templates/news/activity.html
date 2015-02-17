@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University news</title>
 
+    <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar-fixed-top.css' %}" />
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 
   </head>
   <body>  
@@ -36,19 +36,23 @@
       </div>
     </nav>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          
+          {% if activity_news %}
+            {%for list in activity_news %}
+              <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
+            {% endfor %}
+          {%else%}
+            Error!!!
+          {%endif%}
 
+        </div>
+      </div>
+    </div>  
     
-    {% if activity_news %}
   
-      {%for list in activity_news %}
-      
-          <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
-      {% endfor %}
-    {%else%}
-    Error!!!
-    {%endif%}
-        
-
-    
+          
   </body>
 </html>
