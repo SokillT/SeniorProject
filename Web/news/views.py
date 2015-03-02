@@ -11,12 +11,15 @@ def index(request):
     #template = loader.get_template('news/index.html')
     return render(request,'news/index.html')
 
+def fund(request):
+	fund_news = News.objects.filter(Cid=1)
+	return render(request,'news/fund.html',{'fund_news':fund_news})
+
 def activity(request):
-	activity_news = News.objects.all()
-	#template = loader.get_template('news/activity.html')
-	#context = RequestContext(request,{
-	#	'activity_news': activity_news,
-	#})
-	#output = ', '.join([p.activity for p in activity_news])
-	#return HttpResponse(template.render(context))
+	activity_news = News.objects.filter(Cid=2).order_by('-Nid')
 	return render(request,'news/activity.html',{'activity_news':activity_news})
+
+def announce(request):
+	announce_news = News.objects.filter(Cid=3)
+	return render(request,'news/announce.html',{'announce_news':announce_news})
+

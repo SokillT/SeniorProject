@@ -1,0 +1,4 @@
+#! python
+from kucut import kucut_cli
+if __name__ == '__main__':
+    kucut_cli.cutfile()

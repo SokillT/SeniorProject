@@ -30,7 +30,13 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/news">Home</a></li>
-            <li><a href="#about">คลังข่าว</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ข่าว<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">ข่าวทั่วไป</a></li>
+                  <li><a href="#">ข่าวแจ้งเตือน</a></li>
+                </ul>
+              </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -38,8 +44,14 @@
 
     <div class="container">
       <div class="row">
+        <center> 
+        <button class="btn btn-default">กิจกรรมมหาวิทยาลัย</button>
+        <button class="btn btn-default">กิจกรรมเพื่อสร้างเสริมสมรรถนะ</button>
+        <button class="btn btn-default">กิจกรรมเพื่อสังคม</button>
+        </center>
         <div class="col-md-6">
-          
+        
+        <p>
           {% if activity_news %}
             {%for list in activity_news %}
               <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
@@ -47,7 +59,7 @@
           {%else%}
             Error!!!
           {%endif%}
-
+        </p>
         </div>
       </div>
     </div>  

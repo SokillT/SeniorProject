@@ -3,7 +3,7 @@ import codecs
 import re
 from bs4 import BeautifulSoup
 
-f = codecs.open('eng.txt','w','utf-8')
+f = codecs.open('topic_eng.txt','w','utf-8')
 
 n=0
 for j in range (1,6):
@@ -46,7 +46,8 @@ for j in range (1,6):
         for i in title:
             #f.write(link[a]+','+i+'\n')
             n+=1
-            f.write(i+ ',' +link[a]+'\n')
+            f.write(i+'\n')
+            #f.write(i+ ',' +link[a]+'\n')
             #print link[a]    
             a+=1
 print n
