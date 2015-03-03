@@ -4,11 +4,23 @@ import re
 from kucut import SimpleKucutWrapper as KUCut
 myKUCut = KUCut()
 
-f = open('topic_nisit_sample.txt','r')
-cut = open('topic_nisit_sample.txt.cut','w')
+f = open('topic_nisit.txt','r')
+cut = open('topic_nisit.txt.cut','w')
 dic = {}
 new = ""	
 num = 0
+
+#stopword List
+stopwordFile = open('stopword.txt','r')
+stopwordLine = stopwordFile.readline()
+stopwordLine = stopwordLine.strip()
+stopword = stopwordLine.split(' ')
+
+charFile = open('character.txt','r')
+charLine = charFile.readline()
+charLine = charLine.strip()
+chars = charLine.split(' ')
+
 for i in f:
 	i = i.strip()
 	i = i.replace('\n', '')
@@ -29,11 +41,11 @@ for i in f:
 			for k in j:
 				word = k.encode('utf-8')
 				#print word
-				
-				if word in dic:
-					dic[word] += 1
-				else:
-					dic[word] = 1
+				if word not in stopword:
+					if word in dic:
+						dic[word] += 1
+					else:
+						dic[word] = 1
 				
 print "//////////////////////////////////"
 s = sorted(dic.keys())
@@ -41,6 +53,4 @@ for key in s:
 	print key + " : "+str(dic[key])
 	cut.write(key + " : " + str(dic[key])+ "\n")
 
-#for i,j in s.items():
-#	print i.decode('utf-8')+ str(j)
 print len(dic)
