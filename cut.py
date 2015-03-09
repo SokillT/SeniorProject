@@ -4,8 +4,8 @@ import re
 from kucut import SimpleKucutWrapper as KUCut
 myKUCut = KUCut()
 
-f = open('topic_nisit.txt','r')
-cut = open('topic_nisit.txt.cut','w')
+f = open('topic_ku.txt','r')
+cut = open('topic_ku.txt.cut','w')
 dic = {}
 new = ""	
 num = 0
@@ -16,7 +16,7 @@ stopwordLine = stopwordFile.readline()
 stopwordLine = stopwordLine.strip()
 stopword = stopwordLine.split(' ')
 
-charFile = open('character.txt','r')
+charFile = open('alphabet.txt','r')
 charLine = charFile.readline()
 charLine = charLine.strip()
 chars = charLine.split(' ')
@@ -27,21 +27,20 @@ for i in f:
 	num += 1
 	print num
 	for c in i:
-		m = re.match("\d",c)
-		if m:
-			new += " "
-		elif c in "{}[]#$&.*,;\"\n!:?~()></\\'^":
-			new += " "
-		else :
+		if (c in chars) or c.isalpha():
 			new += c
+		#elif c in "{}[]#$&.*,;\"\n!:?~()></\\'^":
+		#	new += " "
+		else :
+			new += " "
 	fd = new.decode('utf-8')
 	result = myKUCut.tokenize([fd])
 	for i in result:
 		for j in i:
 			for k in j:
-				word = k.encode('utf-8')
+				word = k.encode('utf-8').lower()
 				#print word
-				if word not in stopword:
+				if (word not in stopword) and word != "":
 					if word in dic:
 						dic[word] += 1
 					else:
