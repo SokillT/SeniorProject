@@ -3,10 +3,10 @@ import codecs
 import re
 from bs4 import BeautifulSoup
 
-f = codecs.open('topic_eng.txt','w','utf-8')
+f = codecs.open('eng.txt','w','utf-8')
 
 n=0
-for j in range (1,6):
+for j in range (1,5):
     req = urllib2.Request('http://158.108.40.231/?page_id=271&paged='+str(j))
     res = urllib2.urlopen(req)
     page = res.read()
