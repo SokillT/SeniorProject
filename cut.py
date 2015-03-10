@@ -2,8 +2,8 @@
 from kucut import SimpleKucutWrapper as KUCut
 myKUCut = KUCut()
 
-f = open('eng.txt','r')
-cut = open('3-announce.txt.cut','w')
+f = open('1-scholarship.txt','r')
+cut = open('1-scholarship.txt.cut','w')
 dic = {}
 new = ""	
 num = 0
@@ -25,8 +25,6 @@ s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">
 for i in f:
 	i = i.strip()
  	i = i.replace('\n', '')
-	if num >100:
-		break
 	num += 1
 	print num
 	if num >100:
