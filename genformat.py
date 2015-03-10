@@ -47,8 +47,8 @@ def tokenize(filename):
 		line = line.replace('\n','')
 		count += 1
 		print line
-		#if count > 100:
-		#	break
+		if count > 100:
+			break
 		print count
 		newword = line.decode('utf-8')
 		result = myKUCut.tokenize([newword])
@@ -92,12 +92,20 @@ def vectorspace(line,n):
 			vector[i] = 0
 
 	vectors=sorted(vector.keys())
-	train.write(str(n))
 	index = 1
-	for w in vectors:
-		train.write(" "+str(index)+":"+str(vector[w]))
-		index += 1
-	train.write("\n")
+	if n!= 4:
+		train.write(str(n))
+		for w in vectors:
+			train.write(" "+str(index)+":"+str(vector[w]))
+			index += 1
+		train.write("\n")
+	else:
+		test.write("x")
+		for w in vectors:
+			test.write(" "+str(index)+":"+str(vector[w]))
+			index += 1
+		test.write("\n")
+
 
 #output file
 train = open('train.txt.cut','w')
@@ -108,7 +116,7 @@ dic = {}
 totaldic = []
 stopword = []
 set_globalvar()
-List_filename = ["1-scholarship.txt","2-activity.txt","eng.txt"]
+List_filename = ["1-scholarship.txt","2-activity.txt","eng.txt","raw_test2.txt"]
 stopwordfile()
 
 #main
@@ -127,6 +135,8 @@ for name in List_filename:
 		line = line.strip()
 		line = line.replace('\n','')
 		vectorspace(line,n)
+
+
 
 
 
