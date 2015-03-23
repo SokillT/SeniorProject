@@ -2,6 +2,7 @@
 
 #import library
 from kucut import SimpleKucutWrapper as KUCut
+import math
 myKUCut = KUCut()
 
 def set_globalvar():
@@ -9,9 +10,13 @@ def set_globalvar():
 	global stopword
 	global s
 	global dic
+	global df
+	global idf
+	global weight
 	global totaldic
 	global train
 	global test
+	#global N 	#Number of doc in collection
 
 def inputfile(filename):
 	print "==> inputfile"
@@ -41,12 +46,12 @@ def tokenize(filename):
 	count = 0
 	s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">","<","/","\'","^","-","@","0","1","2","3","4","5","6","7","8","9"]
 	newword = ""
+	listword = [] #list of word in each doc
 
 	for line in f:
 		line = line.strip()
 		line = line.replace('\n','')
 		count += 1
-		print line
 		if count > 100:
 			break
 		print count
@@ -61,6 +66,12 @@ def tokenize(filename):
 							dic[word] += 1
 						else:
 							dic[word] = 1
+							df[word] = 0
+						if word not in listword:
+							listword.append(word) 
+	for i in listword:
+		df[i] += 1
+	return count
 
 def gen_vector(dic):
 	vector = {}
@@ -90,6 +101,8 @@ def vectorspace(line,n):
 	for i in totaldic:
 		if i not in vector:
 			vector[i] = 0
+		else:
+			vector[i] = vector[i]*idf[i]
 
 	vectors=sorted(vector.keys())
 	index = 1
@@ -106,15 +119,22 @@ def vectorspace(line,n):
 			index += 1
 		test.write("\n")
 
+def idfCal():
+	for i in totaldic:
+		idf[i] = math.log((N/df[i]),10)
 
 #output file
-train = open('train.txt.cut','w')
-test = open('test.txt.cut','w')
+train = open('train.txt','w')
+test = open('test.txt','w')
 
 #declar variable & iniatial value
 dic = {}
+df = {}
+idf = {}
+weight = {}
 totaldic = []
 stopword = []
+N = 0
 set_globalvar()
 List_filename = ["1-scholarship.txt","2-activity.txt","eng.txt","raw_test2.txt"]
 stopwordfile()
@@ -122,10 +142,11 @@ stopwordfile()
 #main
 for name in List_filename:
 	f = inputfile(name)
-	tokenize(f)
+	N += tokenize(f)
 
 #show dic
 printdic(dic)
+idfCal()
 
 n=0
 for name in List_filename:
@@ -134,13 +155,6 @@ for name in List_filename:
 	for line in f:
 		line = line.strip()
 		line = line.replace('\n','')
-		vectorspace(line,n)
+		vectorspace(line,n)	
 
-
-
-
-
-
-
-	
-	
+print "N = " + str(N)

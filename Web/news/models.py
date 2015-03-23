@@ -6,9 +6,22 @@ class News(models.Model):
 	Nid = models.AutoField(primary_key=True)
 	Topic = models.CharField(max_length=100)
 	Link = models.CharField(max_length=100)
-	Cid = models.IntegerField(default=0)
+	Date = models.DateField()
 
 class Category(models.Model):
 	Cid = models.IntegerField(primary_key=True)
-	Type = models.CharField(max_length=50)
+	CatType = models.CharField(max_length=50)
+
+class Subcate(models.Model):
+	Sid = models.IntegerField(primary_key=True)
+	SubType = models.CharField(max_length=50)
+	Cid = models.ForeignKey(Category)
+
+class News2Sub(models.Model):
+	Nid = models.ForeignKey(News)
+	Sid = models.ForeignKey(Subcate)
 		
+
+		
+		
+
