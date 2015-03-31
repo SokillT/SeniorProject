@@ -5,6 +5,7 @@ from django.db import models
 class News(models.Model):
 	Nid = models.AutoField(primary_key=True)
 	Topic = models.CharField(max_length=100)
+	Content = models.TextField(blank=True, null=True)
 	Link = models.CharField(max_length=100)
 	Date = models.DateField()
 
@@ -20,8 +21,3 @@ class Subcate(models.Model):
 class News2Sub(models.Model):
 	Nid = models.ForeignKey(News)
 	Sid = models.ForeignKey(Subcate)
-		
-
-		
-		
-

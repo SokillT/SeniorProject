@@ -51,6 +51,4 @@ for j in range (1,5):
             #print link[a]    
             a+=1
 print n
-        #print k
-#print soup
 f.close()
