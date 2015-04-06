@@ -26,9 +26,9 @@ for line in rows:
 			num+=1
 			print num
 			text = j.get_text()
-			topic.write(text+"\n")
 			each.append(j.get_text())
 			each.append("http://nisit.kasetsart.org/"+link.get('href'))
+			topic.write(text+"http://nisit.kasetsart.org/"+link.get('href')+"\n")
 			#f.write("http://nisit.kasetsart.org/"+link.get('href')+"\n")
 		data.append(each)
 topic.close()

@@ -12,7 +12,7 @@ def index(request):
     return render(request,'news/index.html')
 
 def fund(request):
-	fund_list = Subcate.objects.filter(Cid=1)
+	fund_list = News.objects.all()
 	return render(request,'news/fund.html',{'fund_news':fund_list})
 
 def activity(request):
