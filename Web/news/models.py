@@ -7,7 +7,7 @@ class News(models.Model):
 	Topic = models.CharField(max_length=100)
 	Content = models.TextField(blank=True, null=True)
 	Link = models.CharField(max_length=100)
-	DatePublish = models.DateField()
+	DatePublish = models.DateField(null=True)
 
 class Category(models.Model):
 	Cid = models.IntegerField(primary_key=True)

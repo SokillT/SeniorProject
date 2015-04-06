@@ -7,8 +7,9 @@ req = urllib2.Request('http://nisit.kasetsart.org/WebForm_Index_Search_Result_1y
 res = urllib2.urlopen(req) 
 page = res.read()
 soup = BeautifulSoup(page,'html.parser')
-topic=codecs.open('topic_nisit.txt','w','utf-8')
+topic=codecs.open('nisit.txt','w','utf-8')
 
+#http://nisit.kasetsart.org/WebForm_Project_Detail.aspx?proj_code=156010010473
 table = soup.find('table')
 
 data = []
