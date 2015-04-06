@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from news.models import News, Subcate
+from news.models import News, Subcate, News2Sub
 
 def index(request):
     #return HttpResponse("Personalized university news and announcement delivery service")
@@ -13,10 +13,12 @@ def index(request):
 
 def fund(request):
 	fund_list = Subcate.objects.filter(Cid=1)
-	return render(request,'news/fund.html',{'fund_news':fund_news})
+	return render(request,'news/fund.html',{'fund_news':fund_list})
 
 def activity(request):
-	activity_list = Subcate.objects.filter(Cid=2).order_by('-Nid')
+	activity_list = News2Sub.objects.filter(Sid_id=22)
+	for i in activity_list:
+		activity_news = News.objects.filter(Nid=i.Nid_id)
 	return render(request,'news/activity.html',{'activity_news':activity_news})
 
 def announce(request):

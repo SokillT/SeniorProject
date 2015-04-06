@@ -56,8 +56,9 @@
         
         <p>
           {% if activity_news %}
-            {%for list in activity_news %}
-              <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
+            Test<br>
+            {% for i in activity_news %}
+            {{i.Topic}}
             {% endfor %}
           {%else%}
             Error!!!
