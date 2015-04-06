@@ -2,7 +2,7 @@ import urllib2
 import codecs
 from bs4 import BeautifulSoup
 
-f = codecs.open('intaff.txt','w','utf-8')
+f = codecs.open('topic_intaff.txt','w','utf-8')
 
 req = urllib2.Request('http://www.intaff.ku.ac.th/Admin/WBfund/list_funds.php')
 res = urllib2.urlopen(req)    
@@ -26,7 +26,8 @@ for i in rows:
     links.append(i.get('href'))   
     link = "http://www.intaff.ku.ac.th/Admin/WBfund" + i.get('href')
     #print "http://www.intaff.ku.ac.th/Admin/WBfund" + i.get('href')
-    f.write(new+","+link+"\n")
+    #f.write(new+","+link+"\n")
+    f.write(new+"\n")
     print link
 
 

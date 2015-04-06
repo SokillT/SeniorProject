@@ -3,7 +3,7 @@ import codecs
 import re
 from bs4 import BeautifulSoup
 
-f = codecs.open('eng2.txt','w','utf-8')
+f = codecs.open('topic_eng2.txt','w','utf-8')
 
 # declare variables 
 numpage = 13    #number of total page 
@@ -48,7 +48,7 @@ for i in range(1,numpage):
         if link not in totalLink:
             totalLink.append(link)
             details = title +","+ link +","+ datePublish
-            f.write(details + "\n")
+            f.write(title + "\n")
             print details
 print count  
 print len(totalLink)   
