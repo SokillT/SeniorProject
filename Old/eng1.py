@@ -21,7 +21,7 @@ url = ["http://158.108.40.231/?page_id=269&paged=","http://158.108.40.231/?page_
 
 # get source code for each page
 for i in range(1,numpage):
-	req = urllib2.Request("http://158.108.40.231/?page_id=271&paged="+str(i))
+	req = urllib2.Request(url[1]+str(i))
 	res = urllib2.urlopen(req)
 	page = res.read()
 	soup = BeautifulSoup(page)
