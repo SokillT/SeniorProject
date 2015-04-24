@@ -4,9 +4,10 @@ from django.db import models
 
 class News(models.Model):
 	Nid = models.AutoField(primary_key=True)
-	Topic = models.CharField(max_length=100)
+	Topic = models.CharField(max_length=255)
 	Content = models.TextField(blank=True, null=True)
-	Link = models.CharField(max_length=100)
+	Link = models.CharField(max_length=255)
+	Source = models.CharField(max_length=50, null=True)
 	DatePublish = models.DateField(null=True)
 
 class Category(models.Model):
@@ -18,6 +19,6 @@ class Subcate(models.Model):
 	SubType = models.CharField(max_length=50)
 	Cid = models.ForeignKey(Category)
 
-class News2Sub(models.Model):
+class NewsCate(models.Model):
 	Nid = models.ForeignKey(News)
-	Sid = models.ForeignKey(Subcate)
+	Cid = models.ForeignKey(Category)

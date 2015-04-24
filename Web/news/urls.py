@@ -6,4 +6,6 @@ urlpatterns = patterns('',
     url(r'^fund$', views.fund, name='fund'),
     url(r'^activity$', views.activity, name='activity'),
     url(r'^announce$', views.announce, name='announce'),
+    url(r'^test$',views.test),
+    url(r'^testresult$',views.testresult),
 )

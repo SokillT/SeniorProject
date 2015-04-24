@@ -11,7 +11,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar-fixed-top.css' %}" />
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#show").click(function () {
+            $("#aa").show();
+            $("#all").hide();
+        });
+
+    });
+    </script>
 
   </head>
   <body>  
@@ -30,31 +38,51 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/news">Home</a></li>
-             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ข่าว<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="/news/activity">ข่าวกิจกรรม</a></li>
-                  <li><a href="/news/announce">ข่าวประกาศ</a></li>
-                  <li><a href="#">ข่าวทุน</a></li>
-                </ul>
-              </li>
+            <li><a href="/news">Home</a></li>
+            <li class="active"><a href="/news/fund">ข่าวทุน</a></li>
+            <li><a href="/news/announce">ข่าวประกาศ</a></li>
+            <li><a href="/news/activity">ข่าวกิจกรรม</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
+    
 
     <div class="container">
       <div class="row">
         <div class="col-md-10">
+          <center>
+            <button type="button" id="show" class="btn btn-success">ทุนเรียนต่อ</button>
+            <button type="button" class="btn btn-success">ทุนแลกเปลี่ยน</button>
+          </center>
+          
+          <div style="display:none;" id="aa">
+            {% if fund_news %}
+              {%for list in fund_news %}    
+                {% if list.Nid == 8 or list.Nid == 9%}
+                  <p class="bg-danger">
+                  <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
+                  </p>
+                {% endif %}
+              {% endfor %}
+            {%else%}
+              Error!!!
+            {%endif%}
+          </div>
+          
+          
+          <div id="all">
           {% if fund_news %}
             {%for list in fund_news %}
+              <p class="bg-danger">
               <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
+              </p>
             {% endfor %}
           {%else%}
             Error!!!
           {%endif%}
+          </div>
         </div>
       </div>
     </div>
