@@ -2,8 +2,8 @@
 from kucut import SimpleKucutWrapper as KUCut
 myKUCut = KUCut()
 
-f = open('1-scholarship.txt','r')
-cut = open('1-scholarship.txt.cut','w')
+f = open('eng2.txt','r')
+cut = open('eng2.txt.cut','w')
 dic = {}
 new = ""	
 num = 0
@@ -43,6 +43,7 @@ for i in f:
 				if (word not in stopword) and word != "":
 					if word in dic:
 						dic[word] += 1
+						print word
 					else:
 						dic[word] = 1
 				
