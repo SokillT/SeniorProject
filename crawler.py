@@ -232,11 +232,46 @@ def intaff():
 	print len(totalLink)
 	f.close()
 
+def ku():
+	#declare variables
+	f = codecs.open('ku.txt','w','utf-8')
+	totalLink = []
+	datePublish = ""
+	date = ""
+	data = []
+	for i in range(4,8):
+		HTML = getHTML(listUrl[i])
+		table = HTML.find('table')
+		row = table.find_all('a')
+		#print len(row)
+		print row
+		
+		for j in range(0,len(row)+1):
+			if j==len(row)-1:
+				break
+			if j%2==0:
+				title = row[j].get_text().strip()+" "+row[j+1].get_text()
+				title = title.strip()
+				link = row[j].get('href')
+				datePublish = link[62:66] +"-"+ link[66:68] +"-"+ link[68:70] #format yyyymmdd
+				details = title + "," + link +","+ datePublish
+				data.append(details)
+				print str(j) + ":"+ details
+				f.write(title + "," + link +","+ datePublish+"\n")
+	print len(data)
+    	
+	
 
 
 listUrl = ["http://158.108.40.231/?page_id=271&paged=","http://www.eng.ku.ac.th/?page_id=269&paged=",
 		"http://nisit.kasetsart.org/WebForm_Index_Search_Result_1year.aspx?day=back&campus=1",
-		"http://iad.intaff.ku.ac.th/wordpress/?cat=25&paged="]
+		"http://iad.intaff.ku.ac.th/wordpress/?cat=25&paged=",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%C1%CB%D2%C7%D4%B7%C2%D2%C5%D1%C2&load=tab&lang=thai&ip=10&id=87",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%B9%D4%CA%D4%B5&load=tab&lang=thai&ip=10&id=88",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%BB%C3%D0%AA%D8%C1/%CA%D1%C1%C1%B9%D2/%CD%BA%C3%C1&load=tab&lang=thai&ip=10&id=89",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%A1%D2%C3%C8%D6%A1%C9%D2&load=tab&lang=thai&ip=10&id=126",
+		"http://grad.ku.ac.th/index2.php",
+		"http://training.ku.ac.th/2015/"]
 setGlobal()
 
-intaff()
+ku()
