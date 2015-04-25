@@ -195,12 +195,48 @@ def nisitDetails(code):
 	#print details
 	return details
 
+def intaff():
+	#declare variables
+	f=codecs.open('intaff.txt','w','utf-8')
+	totalLink = []
+	datePublish = ""
+	date = ""
+	numpage = 7
+	month = {"มกราคม":"01", "กุมภาพันธ์":"02", "มีนาคม":"03", 
+		"เมษายน":"04", "พฤษภาคม":"05", "มิถุนายน":"06", 
+		"กรกฎาคม":"07", "สิงหาคม":"08", "กันยายน":"09", 
+		"ตุลาคม":"10", "พฤศจิกายน":"11", "ธันวาคม":"12"}
+	for i in range(0,numpage):
+		HTML = getHTML(listUrl[3]+str(i))
+		data = HTML.find_all('header', { 'class' : 'loop-data'})
+		for j in data:
+			loopTitle = j.find('h3',{'class':'loop-title'})
+			title = loopTitle.get_text()
+			link = loopTitle.a.get('href')
+			if link not in totalLink:
+				totalLink.append(link)
+				#เมษายน 16, 2015
+				#2015-04-09 yyyy-mm-dd
+				findDatetime = j.find('p',{'class':'meta'})
+				datetime = findDatetime.get_text()
+				splitdate = datetime.split(' ')
+				s = splitdate[0].encode('utf-8')
+				if len(splitdate[1]) == 2:
+					date = "0" + splitdate[1]
+				else:
+					date = splitdate[1]
+				datePublish = splitdate[2] +"-"+ month[s] +"-"+ date[:2]
+				details = title +","+ link +","+ datePublish
+				print details
+				f.write(details + "\n")
+	print len(totalLink)
+	f.close()
 
 
 
 listUrl = ["http://158.108.40.231/?page_id=271&paged=","http://www.eng.ku.ac.th/?page_id=269&paged=",
 		"http://nisit.kasetsart.org/WebForm_Index_Search_Result_1year.aspx?day=back&campus=1",
-		"http://www.intaff.ku.ac.th/Admin/WBfund/list_funds.php"]
+		"http://iad.intaff.ku.ac.th/wordpress/?cat=25&paged="]
 setGlobal()
 
-nisit()
+intaff()
