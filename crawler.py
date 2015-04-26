@@ -9,21 +9,23 @@ from datetime import date
 def setGlobal():
     global listUrl
     global today
-    global lastNid
 
 def currentDate():
 	today = date.today()
 	return today
 
-def Nid(mode):
-	# r= read, w=write
-	f = codecs.open('Nid.txt',mode,'utf-8')
-	if mode == 'r':
-		i = f.readline()
-		i = i.strip('\n')
-		lastNid = int(i)
-	elif mode == 'w':
-		f.write(str(lastNid+1))
+def readNid():
+	f = codecs.open('Nid.txt','r','utf-8')
+	i = f.readline()
+	i = i.strip('\n')
+	lastNid = int(i,10)
+	f.close()
+	return lastNid
+
+def writeNid(lastNid):
+	f = codecs.open('Nid.txt','w','utf-8')
+	f.write(str(lastNid)+ "\n")
+	f.close()
 
 def getHTML(url):
 	#req = urllib2.Request("http://nisit.kasetsart.org/WebForm_Project_Detail.aspx?proj_code=157010010249")
@@ -43,6 +45,7 @@ def engAnnounce():
 	details = ""
 	link = ""
 	title = ""
+	lastNid = readNid()
 	month = {"Jan":"01", "Feb":"02", "Mar":"03", 
 		"Apr":"04", "May":"05", "Jun":"06", 
 		"Jul":"07", "Aug":"08", "Sep":"09", 
@@ -72,11 +75,13 @@ def engAnnounce():
 				title = a.a.get('title')
 				if link not in totalLink:
 					totalLink.append(link)
-					details = title +","+ link +","+ datePublish
-					f.write(title +","+ link +","+ datePublish + "\n")
+					lastNid = lastNid + 1
+					details = str(lastNid) + ",3," + title +","+ link +","+ datePublish
+					f.write(details + "\n")
 					print details
 	print count  
-	print len(totalLink)   
+	print len(totalLink) 
+	writeNid(lastNid)  
 	f.close()
 
 #NOT WORK
@@ -136,6 +141,8 @@ def nisit():
 	data = []
 	totalLink = []
 	num=0
+	lastNid = readNid()
+
 	HTML = getHTML(listUrl[2])
 	#http://nisit.kasetsart.org/WebForm_Project_Detail.aspx?proj_code=156010010473
 	table = HTML.find('table')
@@ -157,7 +164,8 @@ def nisit():
 					result = re.search('code=[0-9]+',patternLink)
 					codestring = result.group(0)
 					code = codestring.split('=')
-					details = title + "," + patternLink +","+ nisitDetails(code[1])
+					lastNid = lastNid + 1
+					details = str(lastNid) + ",2," +title + "," + patternLink +","+ nisitDetails(code[1])
 					print details
 					data.append(details)
 					topic.write(details+"\n")
@@ -166,6 +174,7 @@ def nisit():
 					#print details
 	print num
 	print len(totalLink)
+	writeNid(lastNid)
 	topic.close()
 
 def nisitDetails(code):
@@ -209,7 +218,6 @@ def nisitDetails(code):
 		dateStart = dateStart + "-0" + splitdate[0]
 	else:
 		dateStart = dateStart + "-" +splitdate[0]
-	
 	details = types + "," + datePublish + "," + dateStart
 	#print details
 	return details
@@ -221,6 +229,7 @@ def intaff():
 	datePublish = ""
 	date = ""
 	numpage = 7
+	lastNid = readNid()
 	month = {"มกราคม":"01", "กุมภาพันธ์":"02", "มีนาคม":"03", 
 		"เมษายน":"04", "พฤษภาคม":"05", "มิถุนายน":"06", 
 		"กรกฎาคม":"07", "สิงหาคม":"08", "กันยายน":"09", 
@@ -245,10 +254,12 @@ def intaff():
 				else:
 					date = splitdate[1]
 				datePublish = splitdate[2] +"-"+ month[s] +"-"+ date[:2]
-				details = title +","+ link +","+ datePublish
+				lastNid = lastNid+ 1
+				details = str(lastNid) + "," + title +","+ link +","+ datePublish
 				print details
 				f.write(details + "\n")
 	print len(totalLink)
+	writeNid(lastNid)
 	f.close()
 
 def ku():
@@ -266,6 +277,7 @@ def ku():
 	datePublish = ""
 	date = ""
 	data = []
+	lastNid = readNid()
 	'''
 	HTML = getHTML("http://www.ku.ac.th/web2012/index.php?c=adms&m=mainpage1")
 	items = HTML.find_all('div',{'class':'dataitem'})
@@ -293,11 +305,13 @@ def ku():
 				title = title.strip()
 				link = row[j].get('href')
 				datePublish = link[62:66] +"-"+ link[66:68] +"-"+ link[68:70] #format yyyymmdd
-				details = title + "," + link +","+ datePublish
+				lastNid = lastNid + 1
+				details = str(lastNid) + "," + title + "," + link +","+ datePublish
 				data.append(details)
 				print str(j) + ":"+ details
-				f.write(title + "," + link +","+ datePublish+"\n")
+				f.write(details+"\n")
 		print len(data)
+	writeNid(lastNid)
 	
 
 
@@ -313,6 +327,6 @@ listUrl = ["http://158.108.40.231/?page_id=271&paged=","http://www.eng.ku.ac.th/
 		"http://training.ku.ac.th/2015/"]
 listFile = ["engAnnounce.txt","engFund.txt","nisit.txt","intaff.txt","ku.txt","grad.txt","training.txt"] 
 today = currentDate()
-Nid('r')
 setGlobal()
-ku()
+
+engAnnounce()

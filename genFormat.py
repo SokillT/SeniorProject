@@ -9,23 +9,19 @@ myKUCut = KUCut()
 def setGlobal():
 	print "==> setGlobal"
 	global stopword
-	global s
 	global dic
-	global df
-	global idf
-	global weight
 	global totaldic
+	global X
+	global y
+	global source
 	global train
 	global test
 	#global N 	#Number of doc in collection
 
 def readInput(filename):
 	print "==> readInput"
-	data = []
 	f = open(filename,'r')
-	for line in f:
-		data.append(line)
-	return data
+	return f
 
 def readStopword():
 	print "==> readStopword"
@@ -35,62 +31,60 @@ def readStopword():
 	stopword = stopwordLine.split(' ')
 	return stopword
 
-def printdic(dic):
-	print "==> printdic"
+def addTotaldic(dic):
+	print "==> addTotaldic"
 	s=sorted(dic.keys())
 	for key in s:
 		if dic[key] > 10:
 			totaldic.append(key)
 			print key + " : " + str(dic[key])
 		#cut.write(key + " : " + str(dic[key]) + "\n")
-	print len(totaldic)
+	#print len(totaldic)
 
-def tokenize(filename):
-	print "==> tokenize"
+def tokenize(title):
+	#print "==> tokenize"
 	count = 0
-	s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">","<","/","\'","^","-","@","0","1","2","3","4","5","6","7","8","9"]
-	newword = ""
-	listword = [] #list of word in each doc
+	s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">","<","/","\'","^","-","_","@","0","1","2","3","4","5","6","7","8","9"]
+	
+	new = ""
+	for c in title:
+		if (c in s) or c.isalpha():
+			new += " "
+		else :
+			new += c
+	newword = new.decode('utf-8')
+	result = myKUCut.tokenize([newword])
+	for i in result:
+		for j in i:
+			for k in j:
+				word = k.encode('utf-8').lower()
+				if (word not in stopword) and word != "":
+					if word in dic:
+						dic[word] += 1
+					else:
+						dic[word] = 1
+						#df[word] = 0
 
-	for line in f:
-		line = line.strip()
-		line = line.replace('\n','')
-		count += 1
-		if count > 100:
-			break
-		print count
-		newword = line.decode('utf-8')
-		result = myKUCut.tokenize([newword])
-		for i in result:
-			for j in i:
-				for k in j:
-					word = k.encode('utf-8').lower()
-					if (word not in stopword) and word != "":
-						if word in dic:
-							dic[word] += 1
-						else:
-							dic[word] = 1
-							df[word] = 0
-						if word not in listword:
-							listword.append(word) 
-	for i in listword:
-		df[i] += 1
-	return count
-
-def gen_vector(dic):
+def gen_vector():
 	vector = {}
 	for i in totaldic:
-		vector.update({i:0})
+		vector[i] =0
 	return vector
 
-def vectorspace(line,n):
+def vectorspace(title,n):
+	#print "==> vectorspace"
+	# n is class number
 	vector = {}
-	#print "==> vector"
-	#vector = gen_vector(dic)
-	#for i in vector:
-	#	print i + str(vector[i])
-	newword = ""
-	newword = line.decode('utf-8')
+	item = []
+	s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">","<","/","\'","^","-","_","@","0","1","2","3","4","5","6","7","8","9"]
+	
+	new = ""
+	for c in title:
+		if (c in s) or c.isalpha():
+			new += " "
+		else :
+			new += c
+	newword = new.decode('utf-8')
 	result = myKUCut.tokenize([newword])
 	for i in result:
 		for j in i:
@@ -100,79 +94,79 @@ def vectorspace(line,n):
 					if word in totaldic:
 						if word in vector:
 							vector[word] += 1
+							print "add"
 						else:
 							vector[word] = 1
+							print "1"
 	for i in totaldic:
 		if i not in vector:
 			vector[i] = 0
 		else:
-			vector[i] = vector[i]*idf[i]
+			vector[i] = vector[i]
 
 	vectors=sorted(vector.keys())
-	index = 1
-	if n!= 4:
-		train.write(str(n))
-		for w in vectors:
-			train.write(" "+str(index)+":"+str(vector[w]))
-			index += 1
-		train.write("\n")
-	else:
-		test.write("x")
-		for w in vectors:
-			test.write(" "+str(index)+":"+str(vector[w]))
-			index += 1
-		test.write("\n")
+	for w in vectors:
+		item.append(vector[w])
+		train.write(str(vector[w]) + ",")
+	X.append(item)
+	y.append(n)
+	train.write("\n")
 
-def idfCal():
-	for i in totaldic:
-		idf[i] = math.log((N/df[i]),10)
-
-#declar variable & iniatial value
-dic = {}
-df = {}
-idf = {}
-weight = {}
-totaldic = []
-stopword = []
-N = 0
-setGlobal()
-readStopword()
-
-data = readInput('ku.txt')
-print data
+def main():
+	c =0
+	count = 0
+	for name in listFilename:
+		count += 1
+		f = readInput(name)
+		line = ""
+		for line in f:
+			details = []
+			line = line.strip()
+			line = line.replace('\n','')
+			split = line.split(',')
+			if split[1] != "5":
+				details.append(split[0])
+				details.append(split[1])
+				details.append(split[2])
+				details.append(split[3])
+				if count == 1:
+					a = [1,0,0,0]
+					source.append(a)
+				elif count == 2:
+					a = [0,1,0,0]
+					source.append(a)
+				elif count == 3:
+					a = [0,0,1,0]
+					source.append(a)
+				elif count == 4:
+					a = [0,0,0,1]
+					source.append(a)
+				allNews.append(details)
+			else:
+				c += 1
+	for item in allNews:
+		try:
+			tokenize(item[2])
+		except(UnicodeEncodeError):
+			print "ERROR!!!" + item[2] +":", item[0]
+			pass
+	addTotaldic(dic)
+	for item in allNews:
+		#print item[2]
+		vectorspace(item[2],item[1])
+	print len(allNews)
 
 #output file
 train = open('train.txt','w')
-test = open('test.txt','w')
 
 #declar variable & iniatial value
 dic = {}
-df = {}
-idf = {}
-weight = {}
 totaldic = []
 stopword = []
-N = 0
-set_globalvar()
-List_filename = ["1-scholarship.txt","2-activity.txt","eng.txt","raw_test2.txt"]
-stopwordfile()
-
-#main
-for name in List_filename:
-	f = inputfile(name)
-	N += tokenize(f)
-
-#show dic
-printdic(dic)
-idfCal()
-
-n=0
-for name in List_filename:
-	f = inputfile(name)
-	n += 1
-	for line in f:
-		line = line.strip()
-		line = line.replace('\n','')
-		vectorspace(line,n)	
-
-print "N = " + str(N)
+allNews =[]
+X = []
+y = []
+source = []
+setGlobal()	
+listFilename = ["2015-04-26 intaff.txt","2015-04-26 ku.txt","2015-04-26 engAnnounce.txt","2015-04-26 nisit.txt"]
+readStopword()
