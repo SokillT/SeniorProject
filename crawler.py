@@ -3,9 +3,27 @@ import urllib2
 import codecs
 import re
 from bs4 import BeautifulSoup
+import time
+from datetime import date
 
 def setGlobal():
     global listUrl
+    global today
+    global lastNid
+
+def currentDate():
+	today = date.today()
+	return today
+
+def Nid(mode):
+	# r= read, w=write
+	f = codecs.open('Nid.txt',mode,'utf-8')
+	if mode == 'r':
+		i = f.readline()
+		i = i.strip('\n')
+		lastNid = int(i)
+	elif mode == 'w':
+		f.write(str(lastNid+1))
 
 def getHTML(url):
 	#req = urllib2.Request("http://nisit.kasetsart.org/WebForm_Project_Detail.aspx?proj_code=157010010249")
@@ -17,7 +35,7 @@ def getHTML(url):
 
 def engAnnounce():
 	# declare variables 
-	f = codecs.open('engAnnounce.txt','w','utf-8')
+	f = codecs.open(str(today) +' engAnnounce.txt','w','utf-8')
 	numpage = 53	#number of total page 
 	count = 0		#amount of news topics
 	datePublish = ""
@@ -64,7 +82,7 @@ def engAnnounce():
 #NOT WORK
 def engFund():
 	# declare variables 
-	f = codecs.open('engFund.txt','w','utf-8')
+	f = codecs.open(str(today) +' engFund.txt','w','utf-8')
 	numpage = 4    #number of total page 
 	count = 0       #amount of news topics
 	datePublish = ""
@@ -112,7 +130,8 @@ def engFund():
 
 def nisit():
 	#declare variables
-	topic=codecs.open('nisit.txt','w','utf-8')
+	d=codecs.open("nisit",'a','utf-8')
+	topic=codecs.open(str(today) + ' nisit.txt','w','utf-8')
 	pattern = "http://nisit.kasetsart.org/"
 	data = []
 	totalLink = []
@@ -197,7 +216,7 @@ def nisitDetails(code):
 
 def intaff():
 	#declare variables
-	f=codecs.open('intaff.txt','w','utf-8')
+	f=codecs.open(str(today) +' intaff.txt','w','utf-8')
 	totalLink = []
 	datePublish = ""
 	date = ""
@@ -233,19 +252,39 @@ def intaff():
 	f.close()
 
 def ku():
+	'''
+	# get date if news not exist in database
+	d = codecs.open('ku.txt','w','utf-8')
+	d.write(str(today)+"\n")
+	d.close()
+	'''
+
 	#declare variables
-	f = codecs.open('ku.txt','w','utf-8')
+	#Nid,Title,Link,Content,Pic,DatePubish,DateStart
+	f = codecs.open(str(today) +' ku.txt','w','utf-8')
 	totalLink = []
 	datePublish = ""
 	date = ""
 	data = []
-	for i in range(4,8):
+	'''
+	HTML = getHTML("http://www.ku.ac.th/web2012/index.php?c=adms&m=mainpage1")
+	items = HTML.find_all('div',{'class':'dataitem'})
+	for i in items:
+		link = i.a
+		link = link.get('href')
+		linkRemove = re.sub(remove,'',link)
+		img = i.find('img')
+		img = img.get('src')
+		text = i.find('div',{'class':'title'})
+		title = text.get_text()
+		text = i.find('div',{'class':'comment'})
+		title = title + text.get_text()
+		#print title
+	'''
+	for i in range(4,9):
 		HTML = getHTML(listUrl[i])
 		table = HTML.find('table')
 		row = table.find_all('a')
-		#print len(row)
-		print row
-		
 		for j in range(0,len(row)+1):
 			if j==len(row)-1:
 				break
@@ -258,20 +297,22 @@ def ku():
 				data.append(details)
 				print str(j) + ":"+ details
 				f.write(title + "," + link +","+ datePublish+"\n")
-	print len(data)
-    	
+		print len(data)
 	
 
 
 listUrl = ["http://158.108.40.231/?page_id=271&paged=","http://www.eng.ku.ac.th/?page_id=269&paged=",
 		"http://nisit.kasetsart.org/WebForm_Index_Search_Result_1year.aspx?day=back&campus=1",
 		"http://iad.intaff.ku.ac.th/wordpress/?cat=25&paged=",
-		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%C1%CB%D2%C7%D4%B7%C2%D2%C5%D1%C2&load=tab&lang=thai&ip=10&id=87",
-		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%B9%D4%CA%D4%B5&load=tab&lang=thai&ip=10&id=88",
-		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%BB%C3%D0%AA%D8%C1/%CA%D1%C1%C1%B9%D2/%CD%BA%C3%C1&load=tab&lang=thai&ip=10&id=89",
-		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%20%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%A1%D2%C3%C8%D6%A1%C9%D2&load=tab&lang=thai&ip=10&id=126",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%CA%D2%C3%E1%C5%D0%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%C1%CB%D2%C7%D4%B7%C2%D2%C5%D1%C2&load=tab&lang=thai&ip=10&id=87",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%CA%D2%C3%E1%C5%D0%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%B9%D4%CA%D4%B5&load=tab&lang=thai&ip=10&id=88",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%CA%D2%C3%E1%C5%D0%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%BB%C3%D0%AA%D8%C1/%CA%D1%C1%C1%B9%D2/%CD%BA%C3%C1&load=tab&lang=thai&ip=10&id=89",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%CA%D2%C3%E1%C5%D0%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%A1%D2%C3%C8%D6%A1%C9%D2&load=tab&lang=thai&ip=10&id=126",
+		"http://www.ku.ac.th/web2012/index.php?c=adms&m=viewallnews&page=%A2%E8%D2%C7%CA%D2%C3%E1%C5%D0%A1%D4%A8%A1%C3%C3%C1&page1=%A2%E8%D2%C7%A1%D2%C3%C3%D1%BA%C3%D2%A7%C7%D1%C5&load=tab&lang=thai&ip=10&id=128",
 		"http://grad.ku.ac.th/index2.php",
 		"http://training.ku.ac.th/2015/"]
+listFile = ["engAnnounce.txt","engFund.txt","nisit.txt","intaff.txt","ku.txt","grad.txt","training.txt"] 
+today = currentDate()
+Nid('r')
 setGlobal()
-
 ku()

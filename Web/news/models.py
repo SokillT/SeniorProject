@@ -1,6 +1,9 @@
 from django.db import models
 
 # Create your models here.
+class Category(models.Model):
+	Cid = models.IntegerField(primary_key=True)
+	CatType = models.CharField(max_length=50)
 
 class News(models.Model):
 	Nid = models.AutoField(primary_key=True)
@@ -9,16 +12,14 @@ class News(models.Model):
 	Link = models.CharField(max_length=255)
 	Source = models.CharField(max_length=50, null=True)
 	DatePublish = models.DateField(null=True)
-
-class Category(models.Model):
-	Cid = models.IntegerField(primary_key=True)
-	CatType = models.CharField(max_length=50)
+	DateStart = models.DateField(null=True)
+	Cid = models.ForeignKey(Category)
 
 class Subcate(models.Model):
 	Sid = models.IntegerField(primary_key=True)
-	SubType = models.CharField(max_length=50)
+	SubType = models.CharField(max_length=100)
 	Cid = models.ForeignKey(Category)
 
-class NewsCate(models.Model):
+class News2Sub(models.Model):
 	Nid = models.ForeignKey(News)
-	Cid = models.ForeignKey(Category)
+	Sid = models.ForeignKey(Subcate)

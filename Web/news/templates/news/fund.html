@@ -11,10 +11,38 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar-fixed-top.css' %}" />
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
     <script type="text/javascript">
       $(document).ready(function(){
-        $("#show").click(function () {
-            $("#aa").show();
+        $("#110").click(function () {
+            $("#d110").show();
+            $("#d120").hide();
+            $("#d130").hide();
+            $("#d140").hide();
+            $("#all").hide();
+        });
+
+        $("#120").click(function () {
+            $("#d110").hide();
+            $("#d120").show();
+            $("#d130").hide();
+            $("#d140").hide();
+            $("#all").hide();
+        });
+
+        $("#130").click(function () {
+            $("#d110").hide();
+            $("#d120").hide();
+            $("#d130").show();
+            $("#d140").hide();
+            $("#all").hide();
+        });
+
+        $("#140").click(function () {
+            $("#d110").hide();
+            $("#d120").hide();
+            $("#d130").hide();
+            $("#d140").show();
             $("#all").hide();
         });
 
@@ -40,8 +68,8 @@
           <ul class="nav navbar-nav">
             <li><a href="/news">Home</a></li>
             <li class="active"><a href="/news/fund">ข่าวทุน</a></li>
-            <li><a href="/news/announce">ข่าวประกาศ</a></li>
             <li><a href="/news/activity">ข่าวกิจกรรม</a></li>
+            <li><a href="/news/announce">ข่าวประกาศ</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -51,38 +79,100 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-1">
+        </div>
+          <div class="col-md-11">
+          
           <center>
-            <button type="button" id="show" class="btn btn-success">ทุนเรียนต่อ</button>
-            <button type="button" class="btn btn-success">ทุนแลกเปลี่ยน</button>
+            <br>
+            <button type="button" id="110" class="btn btn-default">ทุนวิจัย</button>
+            <button type="button" id="120" class="btn btn-default">ทุนเรียนแลกเปลี่ยน</button>
+            <button type="button" id="130" class="btn btn-default">ทุนเรียนต่อ</button>
+            <button type="button" id="140" class="btn btn-default">ทุนอื่นๆ</button>
+            <br><br>
           </center>
           
-          <div style="display:none;" id="aa">
-            {% if fund_news %}
-              {%for list in fund_news %}    
-                {% if list.Nid == 8 or list.Nid == 9%}
-                  <p class="bg-danger">
-                  <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
-                  </p>
+
+          <div style="display:none;" id="d110">
+            {% if fund_110 %}
+              {% for list in fund_110 %}
+                {% for all in fund_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+
+          <div style="display:none;" id="d120">
+          {% if fund_120 %}
+            {% for list in fund_120 %}
+                {% for all in fund_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+          {%else%}
+            None!!!
+          {%endif%}
+          </div>
+
+          <div style="display:none;" id="d130">
+            {% if fund_130 %}
+              {% for list in fund_130 %}
+                {% if list.Sid_id == 130 or list.Sid_id == 131 or list.Sid_id == 132 %}
+                {% for all in fund_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
                 {% endif %}
               {% endfor %}
             {%else%}
-              Error!!!
+              None!!!
+            {%endif%}
+          </div>
+
+          <div style="display:none;" id="d140">
+          {% if fund_140 %}
+            {% for list in fund_140 %}
+                {% for all in fund_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+          {%else%}
+            None!!!
+          {%endif%}
+          </div>
+
+          <div id="all">
+            {% if fund_all %}
+              {%for list in fund_all%}
+                <p class="bg-danger">
+                <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
+                </p>
+              {% endfor %}
+            {%else%}
+              None!!!
             {%endif%}
           </div>
           
           
-          <div id="all">
-          {% if fund_news %}
-            {%for list in fund_news %}
-              <p class="bg-danger">
-              <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
-              </p>
-            {% endfor %}
-          {%else%}
-            Error!!!
-          {%endif%}
-          </div>
+        
         </div>
       </div>
     </div>
