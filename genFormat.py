@@ -124,11 +124,12 @@ def main():
 			line = line.strip()
 			line = line.replace('\n','')
 			split = line.split(',')
-			if split[1] != "5":
+			if split[1] != "4":
 				details.append(split[0])
 				details.append(split[1])
 				details.append(split[2])
 				details.append(split[3])
+				allNews.append(details)
 				if count == 1:
 					a = [1,0,0,0]
 					source.append(a)
@@ -138,10 +139,9 @@ def main():
 				elif count == 3:
 					a = [0,0,1,0]
 					source.append(a)
-				elif count == 4:
-					a = [0,0,0,1]
-					source.append(a)
-				allNews.append(details)
+				#elif count == 4:
+				#	a = [0,0,0,1]
+				#	source.append(a)
 			else:
 				c += 1
 	for item in allNews:
@@ -168,5 +168,5 @@ X = []
 y = []
 source = []
 setGlobal()	
-listFilename = ["2015-04-26 intaff.txt","2015-04-26 ku.txt","2015-04-26 engAnnounce.txt","2015-04-26 nisit.txt"]
+listFilename = ["2015-04-26 intaff.txt","2015-04-26 ku.txt","2015-04-26 engAnnounce.txt"] #,"2015-04-26 nisit.txt"]
 readStopword()

@@ -8,7 +8,7 @@ import numpy as np
 
 #not
 def crossValidation(X,y):
-	cross = open('test2.txt','w')
+	cross = open('test3.txt','w')
 	#scores = cross_validation.cross_val_score(clf,X,y,10)
 	skf = StratifiedKFold(y, 10)
 	i = 0
@@ -43,7 +43,6 @@ def tranformVector(X):
 	tfidf = transformer.fit_transform(X)
 	return tfidf.toarray()         
 
-#not
 def train(X,y,i):
 	#X = np.array([[-1, -1], [-2, -1], [1, 1], [2, 1]])
 	#y = np.array([1, 1, 2, 2])
@@ -52,15 +51,8 @@ def train(X,y,i):
 	name = "svmModel" + str(i) + ".pkl"
 	joblib.dump(clf, name)
 
-#not
 def predict(X_test,i):
 	name = "svmModel" + str(i) + ".pkl"
 	clf2 = joblib.load(name)
 	y_pre =clf2.predict(X_test)
 	return y_pre
-
-#not
-def accuracy():
-	y_pred = [0, 2, 1, 3]
-	y_true = [0, 1, 2, 3]
-	accuracyValue = accuracy_score(y_true, y_pred)
