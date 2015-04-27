@@ -22,7 +22,7 @@ def fund(request):
 	#sql = "SELECT * FROM news_news INNER JOIN news_news2sub ON news_news.Nid = news_news2sub.Nid_id"
 	#cursor.execute(sql)
 	#row = cursor.fetchone()
-	fund_all = News.objects.filter(Cid_id=1)
+	fund_all = News.objects.filter(Cid_id=1).order_by('-DatePublish')
 	fund_110 = News2Sub.objects.filter(Sid_id=110)
 	fund_120 = News2Sub.objects.filter(Sid_id=120)
 	fund_130 = News2Sub.objects.all()
@@ -31,12 +31,17 @@ def fund(request):
 	return render(request,'news/fund.html',{'fund_110':fund_110,'fund_120':fund_120,'fund_130':fund_130, 'fund_140':fund_140,'fund_all':fund_all,'fund_types':fund_types})
 
 def activity(request):
-	activity_all = Subcate.objects.filter(Cid=2)
-	return render(request,'news/activity.html',{'activity_all':activity_all})
+	activity_all = News.objects.filter(Cid_id=2).order_by('-DatePublish')
+	activity_220 = News2Sub.objects.filter(Sid_id=220)
+	activity_210 = News2Sub.objects.filter(Sid_id=210)
+	activity_211 = News2Sub.objects.filter(Sid_id=211)
+	activity_216 = News2Sub.objects.filter(Sid_id=216)
+	activity_217 = News2Sub.objects.filter(Sid_id=217)
+	return render(request,'news/activity.html',{'activity_all':activity_all,'activity_210':activity_210,'activity_216':activity_216,'activity_217':activity_217,'activity_220':activity_220})
 
 def announce(request):
-	announce_news = Subcate.objects.filter(Cid=3)
-	return render(request,'news/announce.html',{'announce_news':announce_news})
+	announce_all = News.objects.filter(Cid_id=3)
+	return render(request,'news/announce.html',{'announce_all':announce_all})
 
 def test(request):
 	return render(request,'news/test.html')

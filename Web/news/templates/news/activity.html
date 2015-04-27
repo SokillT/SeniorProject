@@ -12,6 +12,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar-fixed-top.css' %}" />
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#210").click(function () {
+            $("#d210").show();
+            $("#d220").hide();
+            $("#all").hide();
+        });
+
+        $("#220").click(function () {
+            $("#d210").hide();
+            $("#d220").show();
+            $("#all").hide();
+        });
+    });
+    </script>
+
   </head>
   <body>  
 
@@ -52,19 +68,67 @@
         <button class="btn btn-default">กิจกรรมเพื่อสังคม</button>
         </center>
         -->
-        <div class="col-md-6">
         
-        <p>
-          {% if activity_all %}
-            Test<br>
-            {% for i in activity_all %}
-            {{i.Topic}}
-            {% endfor %}
-          {%else%}
-            Error!!!
-          {%endif%}
-        </p>
+        <div class="col-md-1">
         </div>
+          <div class="col-md-11">
+          
+          <center>
+            <br>
+            <button type="button" id="210" class="btn btn-default">กิจกรรมได้ชั่วโมง</button>
+            <button type="button" id="220" class="btn btn-default">กิจกรรมไม่ได้ชั่วโมง</button>
+            <br><br>
+          </center>
+          
+
+          <div style="display:none;" id="d210">
+            {% if activity_210 %}
+              {% for list in activity_210 %}
+                {% for all in activity_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+
+          <div style="display:none;" id="d220">
+          {% if activity_220 %}
+            {% for list in activity_220 %}
+                {% for all in activity_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+          {%else%}
+            None!!!
+          {%endif%}
+          </div>
+
+          <div id="all">
+            {% if activity_all %}
+              {%for list in activity_all%}
+                <p class="bg-danger">
+                <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
+                </p>
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+          
+          
+        
+        </div>
+
       </div>
     </div>  
     

@@ -12,6 +12,32 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar-fixed-top.css' %}" />
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#310").click(function () {
+            $("#d310").show();
+            $("#d320").hide();
+            $("#d330").hide();
+            $("#all").hide();
+        });
+
+        $("#320").click(function () {
+            $("#d310").hide();
+            $("#d320").show();
+            $("#d330").hide();
+            $("#all").hide();
+        });
+
+        $("#330").click(function () {
+            $("#d310").hide();
+            $("#d320").hide();
+            $("#d330").show();
+            $("#all").hide();
+        });
+    });
+    </script>
+
   </head>
   <body>  
 
@@ -46,15 +72,82 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-10">
-    
-        {% if announce_news %}
-          {%for list in announce_news %}
-            <li><a href="{{list.Link}}">{{list.Topic}}</a></li>
-          {% endfor %}
-        {%else%}
-          Error!!!
-        {%endif%}
+       <div class="col-md-1">
+        </div>
+          <div class="col-md-11">
+          
+          <center>
+            <br>
+            <button type="button" id="310" class="btn btn-default">ข่าวประชาสัมพันธ์</button>
+            <button type="button" id="320" class="btn btn-default">ข่าวมหาวิทยาลัย</button>
+            <button type="button" id="330" class="btn btn-default">ข่าวนิสิต</button>
+            <br><br>
+          </center>
+          
+
+          <div style="display:none;" id="d310">
+            {% if announce_310 %}
+              {% for list in announce_310 %}
+                {% for all in announce_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+
+          <div style="display:none;" id="d320">
+          {% if announce_320 %}
+            {% for list in announce_320 %}
+                {% for all in announce_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+              {% endfor %}
+          {%else%}
+            None!!!
+          {%endif%}
+          </div>
+
+          <div style="display:none;" id="d330">
+            {% if announce_330 %}
+              {% for list in announce_330 %}
+                {% if list.Sid_id == 330%}
+                {% for all in announce_all %}
+                  {% ifequal all.Nid list.Nid_id%}
+                    <p class="bg-danger">
+                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    </p>
+                  {% endifequal %}
+                {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+
+          <div id="all">
+            {% if announce_all %}
+              {%for list in announce_all%}
+                <p class="bg-danger">
+                <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
+                </p>
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+          
+          
         
         </div>
       </div>
