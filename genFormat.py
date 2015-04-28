@@ -74,6 +74,8 @@ def gen_vector():
 def vectorspace(title,n):
 	#print "==> vectorspace"
 	# n is class number
+	cut.codecs.open('topic_cut.txt','a','utf-8')
+
 	vector = {}
 	item = []
 	s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">","<","/","\'","^","-","_","@","0","1","2","3","4","5","6","7","8","9"]
@@ -124,7 +126,7 @@ def main():
 			line = line.strip()
 			line = line.replace('\n','')
 			split = line.split(',')
-			if split[1] != "4":
+			if split[1] != "4" :
 				details.append(split[0])
 				details.append(split[1])
 				details.append(split[2])
@@ -139,11 +141,11 @@ def main():
 				elif count == 3:
 					a = [0,0,1,0]
 					source.append(a)
-				#elif count == 4:
-				#	a = [0,0,0,1]
-				#	source.append(a)
-			else:
-				c += 1
+				elif count == 4:
+					a = [0,0,0,1]
+					source.append(a)
+				else:
+					c += 1
 	for item in allNews:
 		try:
 			tokenize(item[2])
@@ -168,5 +170,5 @@ X = []
 y = []
 source = []
 setGlobal()	
-listFilename = ["2015-04-26 intaff.txt","2015-04-26 ku.txt","2015-04-26 engAnnounce.txt"] #,"2015-04-26 nisit.txt"]
+listFilename = ["2015-04-26 intaff.txt","2015-04-26 ku.txt","2015-04-26 engAnnounce.txt","2015-04-26 nisit.txt"]
 readStopword()

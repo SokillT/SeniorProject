@@ -58,8 +58,11 @@
             <input name="TextBoxSTD_IDNO" type="text" id="TextBoxSTD_IDNO" />
             <input type="submit" name="ButtonSearch" value="enter" id="ButtonSearch" />&nbsp;<font size="2">=&gt;</font>&nbsp;&nbsp;<a id="HyperLinkReport" target="tran_main"></a>
           </form>
-
-          
+          {% if link %}
+          <div>
+            <a href="{{link}}">{{link}}</a>
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>

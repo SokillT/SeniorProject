@@ -1,0 +1,90 @@
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.01      0.03        70
+    class 3       0.50      1.00      0.67        84
+    class 4       0.00      0.00      0.00         6
+
+avg / total       0.67      0.51      0.35       168
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.04      0.08        69
+    class 3       0.52      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.52      0.38       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.03      0.06        69
+    class 3       0.51      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.67      0.52      0.37       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.03      0.06        69
+    class 3       0.51      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.67      0.52      0.37       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.06      0.11        69
+    class 3       0.52      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.53      0.39       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.09      0.16        69
+    class 3       0.53      1.00      0.69        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.54      0.41       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.07      0.14        69
+    class 3       0.52      1.00      0.69        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.54      0.40       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         8
+    class 2       1.00      0.04      0.08        69
+    class 3       0.52      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.52      0.38       166
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         7
+    class 2       1.00      0.03      0.06        69
+    class 3       0.52      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.52      0.37       165
+
+             precision    recall  f1-score   support
+
+    class 1       0.00      0.00      0.00         7
+    class 2       1.00      0.03      0.06        69
+    class 3       0.52      1.00      0.68        84
+    class 4       0.00      0.00      0.00         5
+
+avg / total       0.68      0.52      0.37       165
+

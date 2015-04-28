@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.db import connection
 from news.models import News, Subcate,News2Sub
@@ -50,5 +51,5 @@ def testresult(request):
 	post = request.POST.copy()
 	id = post['TextBoxSTD_IDNO']
 	link = "http://158.108.214.245/WebForm_report_std_B3.aspx?stdid="+id+"&link=1"
-
-	return render(request,'news/testresult.html',{'link':link})
+	#return render(request,'news/test.html')
+	return HttpResponseRedirect(link)

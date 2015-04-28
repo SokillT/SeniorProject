@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, url
+from django.views.generic.base import RedirectView
+#from django.views.generic.simple import redirect_to
 from news import views
 
 urlpatterns = patterns('',
@@ -8,4 +10,8 @@ urlpatterns = patterns('',
     url(r'^announce$', views.announce, name='announce'),
     url(r'^test$',views.test),
     url(r'^testresult$',views.testresult),
+    #redirect any page don't have to index.html
+    #url(r'^.*$', RedirectView.as_view(url='/news', permanent=False), name='index'), 
+    #url(r'^.*$', redirect_to, {'url': 'http://www.google.com'}),
+
 )
