@@ -32,13 +32,19 @@ def fund(request):
 	return render(request,'news/fund.html',{'fund_110':fund_110,'fund_120':fund_120,'fund_130':fund_130, 'fund_140':fund_140,'fund_all':fund_all,'fund_types':fund_types})
 
 def activity(request):
+	list_all = []
+	rows = []
 	activity_all = News.objects.filter(Cid_id=2).order_by('-DatePublish')
+	
 	activity_220 = News2Sub.objects.filter(Sid_id=220)
-	activity_210 = News2Sub.objects.filter(Sid_id=210)
 	activity_211 = News2Sub.objects.filter(Sid_id=211)
 	activity_216 = News2Sub.objects.filter(Sid_id=216)
-	activity_217 = News2Sub.objects.filter(Sid_id=217)
-	return render(request,'news/activity.html',{'activity_all':activity_all,'activity_210':activity_210,'activity_216':activity_216,'activity_217':activity_217,'activity_220':activity_220})
+	row = News2Sub.objects.filter(Sid_id=217)
+	for i in activity_220:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			rows.append(j.Nid)
+	return render(request,'news/activity.html',{'activity_all':activity_all,'row':rows})
 
 def announce(request):
 	announce_all = News.objects.filter(Cid_id=3)

@@ -15,10 +15,4 @@ X = learn.tranformVector(X_new)
 #model.train(X_new,y)
 learn.crossValidation(X,y)
 
-f = codecs.open('X_count.txt','w','utf-8')
-for i in X_new:
-	f.write(i);
-
-print "yes"
-
-cut.codecs.open('topic_cut.txt','w','utf-8')
+print "end"

@@ -16,6 +16,7 @@ def setGlobal():
 	global source
 	global train
 	global test
+	global cut
 	#global N 	#Number of doc in collection
 
 def readInput(filename):
@@ -74,8 +75,6 @@ def gen_vector():
 def vectorspace(title,n):
 	#print "==> vectorspace"
 	# n is class number
-	cut.codecs.open('topic_cut.txt','a','utf-8')
-
 	vector = {}
 	item = []
 	s = ["{","}","[","]","#","$","&",".","*",",",";","\\","!",":","?","~","(",")",">","<","/","\'","^","-","_","@","0","1","2","3","4","5","6","7","8","9"]
@@ -98,6 +97,7 @@ def vectorspace(title,n):
 							vector[word] += 1
 							print "add"
 						else:
+							cut.write("," + word)
 							vector[word] = 1
 							print "1"
 	for i in totaldic:
@@ -155,11 +155,14 @@ def main():
 	addTotaldic(dic)
 	for item in allNews:
 		#print item[2]
+		cut.write(item[0] +","+item[1])
 		vectorspace(item[2],item[1])
+		cut.write("\n")
 	print len(allNews)
 
 #output file
 train = open('train.txt','w')
+cut =open('topic_cut.txt','a')
 
 #declar variable & iniatial value
 dic = {}
