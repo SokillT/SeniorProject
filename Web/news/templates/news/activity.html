@@ -14,15 +14,32 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $("#210").click(function () {
-            $("#d210").show();
-            $("#d220").hide();
+        $("#211").click(function () {
+            $("#a211").show();
+            $("#a216").hide();
+            $("#a217").hide();
+            $("#a220").hide();
             $("#all").hide();
         });
-
+        $("#216").click(function () {
+            $("#a211").hide();
+            $("#a216").show();
+            $("#a217").hide();
+            $("#a220").hide();
+            $("#all").hide();
+        });
+        $("#217").click(function () {
+            $("#a211").hide();
+            $("#a216").hide();
+            $("#a217").show();
+            $("#a220").hide();
+            $("#all").hide();
+        });
         $("#220").click(function () {
-            $("#d210").hide();
-            $("#d220").show();
+            $("#a211").hide();
+            $("#a216").hide();
+            $("#a217").hide();
+            $("#a220").show();
             $("#all").hide();
         });
     });
@@ -49,6 +66,7 @@
             <li><a href="/news/fund">ข่าวทุน</a></li>
             <li class="active"><a href="/news/activity">ข่าวกิจกรรม</a></li>
             <li><a href="/news/announce">ข่าวประกาศ</a></li>
+            <li><a href="/news/nisit">ชั่วโมงกิจกรรม</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -56,66 +74,82 @@
 
     <div class="container">
       <div class="row">
-        <!--
-        <center> 
-        <button class="btn btn-default">กิจกรรมมหาวิทยาลัย</button>
-        <button class="btn btn-default">กิจกรรมเพื่อสร้างเสริมสมรรถนะ</button>
-        <button class="btn btn-default">กิจกรรมเพื่อสังคม</button>
-        </center>
-        -->
-        
         <div class="col-md-1">
         </div>
           <div class="col-md-11">
           
           <center>
             <br>
-            <button type="button" id="210" class="btn btn-default">กิจกรรมได้ชั่วโมง</button>
-            <button type="button" id="220" class="btn btn-default">กิจกรรมไม่ได้ชั่วโมง</button>
+            <button type="button" id="211" class="btn btn-default">กิจกรรมมหาวิทยาลัย</button>
+            <button type="button" id="216" class="btn btn-default">กิจกรรมเพื่อสร้างเสริมสมรรถนะ</button>
+            <button type="button" id="217" class="btn btn-default">กิจกรรมเพื่อสังคม</button>
+            <button type="button" id="220" class="btn btn-default">กิจกรรมทั่วไป</button>
             <br><br>
           </center>
           
-          <!--
-          <div style="display:none;" id="d210">
-            {% if activity_210 %}
-              {% for list in activity_210 %}
-                {% for all in activity_all %}
-                  {% ifequal all.Nid list.Nid_id%}
+          
+          <div style="display:none;" id="a211">
+            {% if a211 %}
+              {% for list in activity_all %}
+                  {% if list.Nid in a211 %}
                     <p class="bg-danger">
-                    <li>{{all.DatePublish}} : <a href="{{all.Link}}">{{all.Topic}}</a></li>
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                     </p>
-                  {% endifequal %}
-                {% endfor %}
+                  {% endif%}
               {% endfor %}
             {%else%}
               None!!!
             {%endif%}
           </div>
 
-          <div style="display:none;" id="d220">
-          {% if activity_220 %}
-            {% for list in activity_220 %}
-                {% for all in activity_all %}
-                  {% ifequal all.Nid list.Nid_id%}
+          <div style="display:none;" id="a216">
+            {% if a216 %}
+              {% for list in activity_all %}
+                  {% if list.Nid in a216 %}
                     <p class="bg-danger">
-                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                     </p>
-                  {% endifequal %}
-                {% endfor %}
+                  {% endif%}
               {% endfor %}
-          {%else%}
-            None!!!
-          {%endif%}
-          </div>-->
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+
+          <div style="display:none;" id="a217">
+            {% if a217 %}
+              {% for list in activity_all %}
+                  {% if list.Nid in a217 %}
+                    <p class="bg-danger">
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
+                    </p>
+                  {% endif%}
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+
+         <div style="display:none;" id="a220">
+            {% if a220 %}
+              {% for list in activity_all %}
+                  {% if list.Nid in a220 %}
+                    <p class="bg-danger">
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
+                    </p>
+                  {% endif%}
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
 
           <div id="all">
-            {% if row %}
+            {% if activity_all %}
               {%for list in activity_all%}
-                {%if list.Nid in row%}
                 <p class="bg-danger">
                 <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                 </p>
-                {%endif%}
               {% endfor %}
             {%else%}
               None!!!

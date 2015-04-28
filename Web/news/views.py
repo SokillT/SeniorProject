@@ -10,45 +10,88 @@ from news.models import News, Subcate,News2Sub
 from itertools import chain
 
 def index(request):
-    #return HttpResponse("Personalized university news and announcement delivery service")
-    #template = loader.get_template('news/index.html')
-    return render(request,'news/index.html')
-
-#def fund(request):
-#	fund_list = News.objects.all()
-#	return render(request,'news/fund.html',{'fund_news':fund_list})
+    fund_all = News.objects.filter(Cid_id=1).order_by('-DatePublish')
+    activity_all = News.objects.filter(Cid_id=2).order_by('-DatePublish')
+    announce_all = News.objects.filter(Cid_id=3).order_by('-DatePublish')
+    return render(request,'news/index.html',{'fund_all':fund_all,'activity_all':activity_all,'announce_all':announce_all})
 
 def fund(request):
-	#cursor = connection.cursor()
-	#sql = "SELECT * FROM news_news INNER JOIN news_news2sub ON news_news.Nid = news_news2sub.Nid_id"
-	#cursor.execute(sql)
-	#row = cursor.fetchone()
+	f110 = []
+	f120 = []
+	f130 = []
+	f140 = []
 	fund_all = News.objects.filter(Cid_id=1).order_by('-DatePublish')
 	fund_110 = News2Sub.objects.filter(Sid_id=110)
 	fund_120 = News2Sub.objects.filter(Sid_id=120)
-	fund_130 = News2Sub.objects.all()
+	fund_130 = News2Sub.objects.filter(Sid_id=130)
 	fund_140 = News2Sub.objects.filter(Sid_id=140)
-	fund_types = Subcate.objects.filter(Cid_id=1)
-	return render(request,'news/fund.html',{'fund_110':fund_110,'fund_120':fund_120,'fund_130':fund_130, 'fund_140':fund_140,'fund_all':fund_all,'fund_types':fund_types})
+	for i in fund_110:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			f110.append(j.Nid)
+	for i in fund_120:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			f120.append(j.Nid)
+	for i in fund_130:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			f130.append(j.Nid)
+	for i in fund_140:
+		row= News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			f140.append(j.Nid)
+	return render(request,'news/fund.html',{'f110':f110,'f120':f120,'f130':f130,'f140':f140,'fund_all':fund_all})
 
 def activity(request):
-	list_all = []
-	rows = []
+	a220 = []
+	a211 = []
+	a216 = []
+	a217 = []
 	activity_all = News.objects.filter(Cid_id=2).order_by('-DatePublish')
-	
 	activity_220 = News2Sub.objects.filter(Sid_id=220)
 	activity_211 = News2Sub.objects.filter(Sid_id=211)
 	activity_216 = News2Sub.objects.filter(Sid_id=216)
-	row = News2Sub.objects.filter(Sid_id=217)
+	activity_217 = News2Sub.objects.filter(Sid_id=217)
 	for i in activity_220:
 		row = News.objects.filter(Nid=i.Nid_id)	
 		for j in row:
-			rows.append(j.Nid)
-	return render(request,'news/activity.html',{'activity_all':activity_all,'row':rows})
+			a220.append(j.Nid)
+	for i in activity_211:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			a211.append(j.Nid)
+	for i in activity_216:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			a216.append(j.Nid)
+	for i in activity_217:
+		row= News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			a217.append(j.Nid)
+	return render(request,'news/activity.html',{'activity_all':activity_all,'a220':a220,'a211':a211,'a216':a216,'a217':a217})
 
 def announce(request):
-	announce_all = News.objects.filter(Cid_id=3)
-	return render(request,'news/announce.html',{'announce_all':announce_all})
+	an310 = []
+	an320 = []
+	an330 = []
+	announce_all = News.objects.filter(Cid_id=3).order_by('-DatePublish')
+	announce_310 = News2Sub.objects.filter(Sid_id=110)
+	announce_320 = News2Sub.objects.filter(Sid_id=120)
+	announce_330 = News2Sub.objects.filter(Sid_id=130)
+	for i in announce_310:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			an310.append(j.Nid)
+	for i in announce_320:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			an320.append(j.Nid)
+	for i in announce_330:
+		row = News.objects.filter(Nid=i.Nid_id)	
+		for j in row:
+			an330.append(j.Nid)
+	return render(request,'news/announce.html',{'announce_all':announce_all,'an310':an310,'an320':an320,'an330':an330})
 
 def test(request):
 	return render(request,'news/test.html')

@@ -70,6 +70,7 @@
             <li class="active"><a href="/news/fund">ข่าวทุน</a></li>
             <li><a href="/news/activity">ข่าวกิจกรรม</a></li>
             <li><a href="/news/announce">ข่าวประกาศ</a></li>
+            <li><a href="/news/nisit">ชั่วโมงกิจกรรม</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -92,17 +93,14 @@
             <br><br>
           </center>
           
-
           <div style="display:none;" id="d110">
-            {% if fund_110 %}
-              {% for list in fund_110 %}
-                {% for all in fund_all %}
-                  {% ifequal all.Nid list.Nid_id%}
+            {% if f110 %}
+              {% for list in fund_all %}
+                  {% if list.Nid in f110 %}
                     <p class="bg-danger">
-                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                     </p>
-                  {% endifequal %}
-                {% endfor %}
+                  {% endif %}
               {% endfor %}
             {%else%}
               None!!!
@@ -110,33 +108,27 @@
           </div>
 
           <div style="display:none;" id="d120">
-          {% if fund_120 %}
-            {% for list in fund_120 %}
-                {% for all in fund_all %}
-                  {% ifequal all.Nid list.Nid_id%}
+            {% if f120 %}
+              {% for list in fund_all %}
+                  {% if list.Nid in f120 %}
                     <p class="bg-danger">
-                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                     </p>
-                  {% endifequal %}
-                {% endfor %}
+                  {% endif %}
               {% endfor %}
-          {%else%}
-            None!!!
-          {%endif%}
+            {%else%}
+              None!!!
+            {%endif%}
           </div>
 
-          <div style="display:none;" id="d130">
-            {% if fund_130 %}
-              {% for list in fund_130 %}
-                {% if list.Sid_id == 130 or list.Sid_id == 131 or list.Sid_id == 132 %}
-                {% for all in fund_all %}
-                  {% ifequal all.Nid list.Nid_id%}
+         <div style="display:none;" id="d130">
+            {% if f130 %}
+              {% for list in fund_all %}
+                  {% if list.Nid in f130 %}
                     <p class="bg-danger">
-                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                     </p>
-                  {% endifequal %}
-                {% endfor %}
-                {% endif %}
+                  {% endif %}
               {% endfor %}
             {%else%}
               None!!!
@@ -144,19 +136,17 @@
           </div>
 
           <div style="display:none;" id="d140">
-          {% if fund_140 %}
-            {% for list in fund_140 %}
-                {% for all in fund_all %}
-                  {% ifequal all.Nid list.Nid_id%}
+            {% if f140 %}
+              {% for list in fund_all %}
+                  {% if list.Nid in f140 %}
                     <p class="bg-danger">
-                    <li><a href="{{all.Link}}">{{all.DatePublish}} : {{all.Topic}}</a></li>
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
                     </p>
-                  {% endifequal %}
-                {% endfor %}
+                  {% endif %}
               {% endfor %}
-          {%else%}
-            None!!!
-          {%endif%}
+            {%else%}
+              None!!!
+            {%endif%}
           </div>
 
           <div id="all">
