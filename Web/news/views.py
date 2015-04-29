@@ -10,10 +10,10 @@ from news.models import News, Subcate,News2Sub
 from itertools import chain
 
 def index(request):
-    fund_all = News.objects.filter(Cid_id=1).order_by('-DatePublish')
-    activity_all = News.objects.filter(Cid_id=2).order_by('-DatePublish')
-    announce_all = News.objects.filter(Cid_id=3).order_by('-DatePublish')
-    return render(request,'news/index.html',{'fund_all':fund_all,'activity_all':activity_all,'announce_all':announce_all})
+    fund_all = News.objects.order_by('-DatePublish')[0:10]
+    #activity_all = News.objects.filter(Cid_id=2)[:5].order_by('-DatePublish')
+    #announce_all = News.objects.filter(Cid_id=3)[:5].order_by('-DatePublish')
+    return render(request,'news/index.html',{'fund_all':fund_all})#'activity_all':activity_all,'announce_all':announce_all})
 
 def fund(request):
 	f110 = []
@@ -76,9 +76,9 @@ def announce(request):
 	an320 = []
 	an330 = []
 	announce_all = News.objects.filter(Cid_id=3).order_by('-DatePublish')
-	announce_310 = News2Sub.objects.filter(Sid_id=110)
-	announce_320 = News2Sub.objects.filter(Sid_id=120)
-	announce_330 = News2Sub.objects.filter(Sid_id=130)
+	announce_310 = News2Sub.objects.filter(Sid_id=310)
+	announce_320 = News2Sub.objects.filter(Sid_id=320)
+	announce_330 = News2Sub.objects.filter(Sid_id=330)
 	for i in announce_310:
 		row = News.objects.filter(Nid=i.Nid_id)	
 		for j in row:
@@ -93,10 +93,10 @@ def announce(request):
 			an330.append(j.Nid)
 	return render(request,'news/announce.html',{'announce_all':announce_all,'an310':an310,'an320':an320,'an330':an330})
 
-def test(request):
-	return render(request,'news/test.html')
+def nisit(request):
+	return render(request,'news/nisit.html')
 
-def testresult(request):
+def result(request):
 	post = request.POST.copy()
 	id = post['TextBoxSTD_IDNO']
 	link = "http://158.108.214.245/WebForm_report_std_B3.aspx?stdid="+id+"&link=1"

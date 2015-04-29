@@ -6,14 +6,8 @@ class Category(models.Model):
 	CatType = models.CharField(max_length=50)
 
 class UserGroup(models.Model):
-	Nid = models.AutoField(primary_key=True)
-	Topic = models.CharField(max_length=255)
-	Content = models.TextField(blank=True, null=True)
-	Link = models.CharField(max_length=255)
-	Source = models.CharField(max_length=50, null=True)
-	DatePublish = models.DateField(null=True)
-	DateStart = models.DateField(null=True)
-	Cid = models.ForeignKey(Category)
+	Gid = models.AutoField(primary_key=True)
+	GName = models.CharField(max_length=50)
 
 class News(models.Model):
 	Nid = models.AutoField(primary_key=True)
@@ -33,3 +27,7 @@ class Subcate(models.Model):
 class News2Sub(models.Model):
 	Nid = models.ForeignKey(News)
 	Sid = models.ForeignKey(Subcate)
+
+class News2User(models.Model):
+	Gid = models.ForeignKey(UserGroup)
+	Nid = models.ForeignKey(News)

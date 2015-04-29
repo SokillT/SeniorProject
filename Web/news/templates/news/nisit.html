@@ -53,16 +53,17 @@
     <div class="container">
       <div class="row">
         <div class="col-md-10">
-          <form action="/news/testresult" method="post" target="_blank">
+          
+          <center>
+          <p>
+          <br>
+          <form action="/news/result" method="post" class="form-inline" target="_blank">
             {% csrf_token %}
+            นิสิตสามารถตรวจสอบชั่วโมงกิจกรรมได้จาก             
             <input name="TextBoxSTD_IDNO" type="text" id="TextBoxSTD_IDNO" />
-            <input type="submit" name="ButtonSearch" value="enter" id="ButtonSearch" />&nbsp;<font size="2">=&gt;</font>&nbsp;&nbsp;<a id="HyperLinkReport" target="tran_main"></a>
-          </form>
-          {% if link %}
-          <div>
-            <a href="{{link}}">{{link}}</a>
-          </div>
-          {% endif %}
+            <button type="submit" name="ButtonSearch" value="enter" id="ButtonSearch" class="btn btn-default">Enter</button>&nbsp;<font size="2">=&gt;</font>&nbsp;&nbsp;<a id="HyperLinkReport" target="tran_main"></a>
+          </form></p>
+          </center>
         </div>
       </div>
     </div>

@@ -42,7 +42,25 @@
     </nav>
 
 
-
+<div class="container">
+      <div class="row">
+       <div class="col-md-1">
+        </div>
+          <div class="col-md-11">
+          <br><br><br>
+            {% if fund_all %}
+              {% for list in fund_all %}
+                    <p class="bg-danger">
+                    <li><a href="{{list.Link}}">{{list.DatePublish}} : {{list.Topic}}</a></li>
+                    </p>
+              {% endfor %}
+            {%else%}
+              None!!!
+            {%endif%}
+          </div>
+        </div>
+      </div>
+    </div>
 
   </body>
 </html>
